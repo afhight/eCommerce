@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'view_order' => 'cart#view_order'
 
-  post 'checkout' => 'cart#checkout'
+  get 'checkout' => 'cart#checkout'
 
   resources :orders
   resources :line_items
