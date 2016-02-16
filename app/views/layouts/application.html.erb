@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>eCommerce App</title>
+  <title>Amalizon</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
@@ -24,19 +24,42 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li></li>
-   <!--      <li><%#= link_to "Items by Category", categorical_path(category_id: product.category.id) %></li>
-        <li><%#= link_to "Products by Brand", branding_path(brand: product.brand) %></li> -->
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse by Category <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <% @categories.each do |category| %>
+                <li><%= link_to category.name, categorical_path(category_id: category.id) %></li>
+              <% end %>
+            </ul>
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse by Brand <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <% @brands.each do |brand| %>
+                <li><%= link_to brand, branding_path(brand: brand) %></li>
+              <% end %>
+            </ul>
+          </li>          
+        </ul>
+         
+
+        
         
       </ul>
      
       <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "View Cart", view_order_path %></li>
         <% if user_signed_in? %>
-          <li><%= link_to "Welcome, #{current_user.name}!", root_path %> </li>
-          <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
-          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+          <li><%= link_to "Welcome, #{current_user.email}!", root_path %> </li>
+          <li><%= link_to edit_user_registration_path do %><i class="fa fa-pencil"></i>Edit Profile
+            <% end %>
+          </li>
+          <li><%= link_to destroy_user_session_path, method: :delete do %><i class="fa fa-sign-out"></i>Sign Out
+            <% end %>
+          </li>
         <% else %>
         	<li> <%= link_to "Welcome, Guest!", root_path %> </li>
+        	<li> <%= link_to "Sign In", new_user_registration_path %></li>
         <% end %>
         
       </ul>
@@ -44,6 +67,13 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<% if controller.controller_name == "storefront" %>
+    <div class="jumbotron">
+      <h1>Welcome to Amalizon!</h1>
+      <h6>buy things, spend money</h6>
+    </div>
+  <% end %>
 
 
 
